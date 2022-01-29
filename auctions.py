@@ -27,17 +27,17 @@ for x in states:
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'lxml')
 
-    for url in soup.find_all("a", {"class": "css-1hnr0ia"}):  # used to get the urls of houses
+    for url in soup.find_all("a", {"class": "css-1b9txmm"}):  # used to get the urls of houses
         urls.append(url.get('href'))
 
     for houses in soup.find_all('article', {'class': 'css-3xqrp1'}):
-        house_in_subs = len(houses.find_all('ul', {'class': 'css-ymwd1t'}))  # number of houses in a suburb
+        house_in_subs = len(houses.find_all('ul', {'class': 'css-qflns9'}))  # number of houses in a suburb
 
         for house in range(0, house_in_subs):  # loops through the suburbs for the amount of houses
             t = datetime.now()
             date.append(t.strftime('%d/%m/%Y'))
 
-            addy = houses.find_all('a', {'class': 'css-1hnr0ia'})  # address
+            addy = houses.find_all('a', {'class': 'css-1b9txmm'})  # address
             address.append(addy[house].get_text())  # appends each each address through a loop
 
             subs = houses.find('h3')  # suburb
