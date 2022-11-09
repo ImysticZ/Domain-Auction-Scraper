@@ -22,19 +22,21 @@ else:
     os.mkdir("auctions")
     os.chdir("auctions")
 
+t = datetime.now()
+
 for x in states:
     url = 'https://www.domain.com.au/auction-results/' + x.lower() + '/'
-    r = requests.get(url)
+    headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"}
+    r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.content, 'lxml')
 
     for url in soup.find_all("a", {"class": "css-1b9txmm"}):  # used to get the urls of houses
         urls.append(url.get('href'))
 
     for houses in soup.find_all('article', {'class': 'css-3xqrp1'}):
-        house_in_subs = len(houses.find_all('ul', {'class': 'css-qflns9'}))  # number of houses in a suburb
+        house_in_subs = len(houses.find_all('div', {'class': 'css-hjun8m'}))  # number of houses in a suburb
 
         for house in range(0, house_in_subs):  # loops through the suburbs for the amount of houses
-            t = datetime.now()
             date.append(t.strftime('%d/%m/%Y'))
 
             addy = houses.find_all('a', {'class': 'css-1b9txmm'})  # address
